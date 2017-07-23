@@ -1,0 +1,9 @@
+.idea/
+.vagrant/
+*.DS_Store
+.fuse_hidden*
+*~
+.directory
+Thumbs.db
+Desktop.ini
+*.log
