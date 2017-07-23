@@ -57,7 +57,7 @@ gem install pry
 # Edit .zshrc for post-login
 printf "\n\n# Post-login\n" >> ~ubuntu/.zshrc
 printf "cd /workspace\n" >> ~ubuntu/.zshrc
-printf "echo 'Project folder is located at ~/workspace and you are here.'" >> ~ubuntu/.zshrc
+printf "echo 'Project folder is located at ~/workspace and you are here.'\n" >> ~ubuntu/.zshrc
 
 # Complete
 echo ""
