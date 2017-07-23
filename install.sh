@@ -51,6 +51,9 @@ gem install bundler
 echo "Installing Rails ..."
 gem install rails
 
+echo "Installing pry..."
+gem install pry
+
 # Edit .zshrc for post-login
 printf "\n\n# Post-login\n" >> ~ubuntu/.zshrc
 printf "cd /workspace\n" >> ~ubuntu/.zshrc
