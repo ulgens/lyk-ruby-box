@@ -23,12 +23,25 @@ echo "Installing extra dependencies..."
 sudo apt install -y imagemagick libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libreadline-dev zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev
 
 ## Rbenv
-sudo apt-add-repository -y ppa:rael-gc/rvm
-sudo apt update
-sudo apt install -y rvm
-printf "source /etc/profile.d/rvm.sh" >> ~ubuntu/.zshrc
-source /etc/profile.d/rvm.sh
-sudo usermod ubuntu -a -G rvm
+echo "Installing rbenv..."
+if [[ ! -d "$HOME/.rbenv" ]]; then
+    git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+    if ! grep -qs "rbenv init" ~/.zshrc; then
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+
+      echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+    fi
+
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
+
+if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
+    git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+fi
+
+sudo apt install -y zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev
 
 # Ruby environment
 RUBY_VERSION="2.4.1"
@@ -37,10 +50,10 @@ echo "Preveting gem system from installing documentation ..."
 echo 'gem: --no-ri --no-doc' >> ~/.gemrc
 
 echo "Installing Ruby $RUBY_VERSION ..."
-rvm install $RUBY_VERSION
+rbenv install $RUBY_VERSION
 
 echo "Setting $RUBY_VERSION as global default Ruby ..."
-rvm default $RUBY_VERSION
+rbenv global $RUBY_VERSION
 
 echo "Updating to latest Rubygems version ..."
 gem update --system
